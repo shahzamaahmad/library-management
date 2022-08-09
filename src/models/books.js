@@ -5,6 +5,13 @@ const booksSchema = new mongoose.Schema({
     type: String,
     require: true,
     unique: true,
+    trim: true,
+    validate(value) {
+      if (value.length <= 0) {
+        throw new Error(`Name Can't be Null`)
+      }
+
+    }
   },
   author: {
     type: String,
@@ -16,13 +23,20 @@ const booksSchema = new mongoose.Schema({
   },
   isbn: {
     type: Number,
-    unique: true
+    unique: true,
+    minlength: 13,
+    validate(value) {
+      if (value < 13) {
+        throw new Error(`ISBN have been 13 digits in length `)
+
+      }
+    }
   },
   count: {
     type: Number,
     defalut: 0
   },
-  issueCount: {
+  borrow: {
     type: Number,
   }
 })
