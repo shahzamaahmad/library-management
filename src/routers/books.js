@@ -23,6 +23,9 @@ router.post('/add', async (req, res) => {
 router.get('/book', async (req, res) => {
   try {
     const books = await Books.find({})
+    if (!books) {
+      return res.status(404).send('No Book Found')
+    }
     res.send(books)
   } catch (e) {
     res.status(500).send()
@@ -63,7 +66,7 @@ router.delete('/book/:id', async (req, res) => {
 
 router.patch('/book/:id', async (req, res) => {
   const updates = Object.keys(req.body)
-  const allowedUpdates = ['name', 'author', 'publication', 'isbn', 'count', 'borrow']
+  const allowedUpdates = ['name', 'author', 'publication', 'isbn', 'count', 'borrow','available']
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
   if (!isValidOperation) {

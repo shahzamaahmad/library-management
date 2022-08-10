@@ -38,6 +38,10 @@ const booksSchema = new mongoose.Schema({
   },
   borrow: {
     type: Number,
+  },
+  available: {
+    type: Number,
+
   }
 })
 
