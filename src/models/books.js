@@ -26,7 +26,7 @@ const booksSchema = new mongoose.Schema({
     unique: true,
     minlength: 13,
     validate(value) {
-      if (value < 13) {
+      if (value.toString().length < 13) {
         throw new Error(`ISBN have been 13 digits in length `)
 
       }
