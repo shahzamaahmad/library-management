@@ -18,7 +18,8 @@ router.post('/admin/login', async (req, res) => {
   try {
     const admin = await Admin.findByCredentials(req.body.email, req.body.password)
     const token = await admin.generateAuthToken()
-    res.json({ token: token, admin: admin })
+    // res.json({ token, admin })
+    res.status(200).json({ token, admin })
     // console.log(admin, token);
   } catch (e) {
     res.status(400).send()
@@ -42,7 +43,7 @@ router.post('/admin/logout', auth, async (req, res) => {
     })
     await req.admin.save()
 
-    res.send()
+    res.send('Logout Successfully')
   } catch (e) {
     res.status(500).send()
   }
@@ -52,7 +53,7 @@ router.post('/admin/logoutAll', auth, async (req, res) => {
   try {
     req.admin.tokens = []
     await req.admin.save()
-    res.send()
+    res.send('All Admin Logout Successfully')
   } catch (e) {
     res.status(500).send()
   }

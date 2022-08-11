@@ -4,24 +4,25 @@ const jwt = require('jsonwebtoken')
 const auth = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '')
-    const decode = jwt.verify(token, 'secretword')
+    const decode = jwt.verify(token, 'abcd')
     const admin = await Admin.findOne({ _id: decode._id, 'tokens.token': token })
+    // console.log(admin);
+    // console.log(token);
     if (!admin) {
       throw new Error()
     }
     req.token = token
     req.admin = admin
-    // console.log(admin);
     next()
   }
   catch (e) {
 
+    res.status(401).send('Please Authenticate')
     // const token = req.header('Authorization').replace('Bearer', '')
     // const decode = jwt.verify(token, 'secretword')
     // const admin = await Admin.findOne({ _id: decode._id, 'tokens.token': token })
 
 
-    res.status(401).send('Please Authenticate')
     // console.log(admin, token);
   }
 }
