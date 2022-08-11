@@ -19,7 +19,7 @@ router.post('/admin/login', async (req, res) => {
     const admin = await Admin.findByCredentials(req.body.email, req.body.password)
     const token = await admin.generateAuthToken()
     // res.json({ token, admin })
-    res.status(200).json({ token, admin })
+    res.status(200).send({ admin, token })
     // console.log(admin, token);
   } catch (e) {
     res.status(400).send()

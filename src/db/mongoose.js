@@ -10,5 +10,5 @@ try {
   console.log("DB Connected Successfully");
 }
 catch (error) {
-  console.log('Unable to Connect DB', error);
+  console.log('DB Disconnected', error);
 }
