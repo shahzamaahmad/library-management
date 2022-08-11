@@ -1,6 +1,7 @@
 const Books = require('../models/books')
 const express = require('express')
 const router = new express.Router()
+const auth = require('../middleware/auth')
 
 // router.post('/add', (req, res) => {
 //   const book = new Books(req.body)
@@ -11,7 +12,7 @@ const router = new express.Router()
 //   })
 // })
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
   const book = new Books(req.body)
   try {
     await book.save()
@@ -51,7 +52,7 @@ router.get('/book/:name', async (req, res) => {
   }
 })
 
-router.delete('/book/:id', async (req, res) => {
+router.delete('/book/:id', auth, async (req, res) => {
   try {
     const book = await Books.findByIdAndDelete(req.params.id)
 
@@ -65,7 +66,7 @@ router.delete('/book/:id', async (req, res) => {
   }
 })
 
-router.patch('/book/:id', async (req, res) => {
+router.patch('/book/:id', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'author', 'publication', 'isbn', 'count', 'borrow', 'available']
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))

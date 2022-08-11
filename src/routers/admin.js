@@ -1,5 +1,6 @@
 const Admin = require('../models/admin')
 const express = require('express')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 router.post('/admin/signup', async (req, res) => {
@@ -24,7 +25,7 @@ router.post('/admin/login', async (req, res) => {
   }
 })
 
-router.get('/admin', async (req, res) => {
+router.get('/admin/me', auth, async (req, res) => {
   try {
     const admins = await Admin.find({})
     res.send(admins)
