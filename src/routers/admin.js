@@ -26,9 +26,23 @@ router.post('/admin/login', async (req, res) => {
 })
 
 router.get('/admin/me', auth, async (req, res) => {
+  res.send(req.user)
+  // try {
+  //   const admins = await Admin.find({})
+  //   res.send(admins)
+  // } catch (e) {
+  //   res.status(500).send()
+  // }
+})
+
+router.post('/admin/logout', auth, async (req, res) => {
   try {
-    const admins = await Admin.find({})
-    res.send(admins)
+    req.admin.tokens = req.admin.tokens.filter((token) => {
+      return token.token !== req.token
+    })
+    await req.admin.save()
+
+    res.send()
   } catch (e) {
     res.status(500).send()
   }
