@@ -2,7 +2,7 @@ const Admin = require('../models/admin')
 const express = require('express')
 const router = new express.Router()
 
-router.post('/admin', async (req, res) => {
+router.post('/admin/signup', async (req, res) => {
   const admin = new Admin(req.body)
   try {
     await admin.save()
