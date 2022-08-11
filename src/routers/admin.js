@@ -26,7 +26,7 @@ router.post('/admin/login', async (req, res) => {
 })
 
 router.get('/admin/me', auth, async (req, res) => {
-  res.send(req.user)
+  res.send(req.admin)
   // try {
   //   const admins = await Admin.find({})
   //   res.send(admins)
@@ -42,6 +42,16 @@ router.post('/admin/logout', auth, async (req, res) => {
     })
     await req.admin.save()
 
+    res.send()
+  } catch (e) {
+    res.status(500).send()
+  }
+})
+
+router.post('/admin/logoutAll', auth, async (req, res) => {
+  try {
+    req.admin.tokens = []
+    await req.admin.save()
     res.send()
   } catch (e) {
     res.status(500).send()
